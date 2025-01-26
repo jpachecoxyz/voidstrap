@@ -1,12 +1,11 @@
 #!/bin/bash
 
-mkfs.xfs /dev/nvme0n1p4
-
+mkfs.ext4 /dev/nvme0n1p4
 mount /dev/nvme0n1p4 /mnt
 mkdir -p /mnt/boot/efi
 mount /dev/nvme0n1p1 /mnt/boot/efi
 
-export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R http://mirrors.servercentral.com/voidlinux/current -r /mnt \
+export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidlinux.org/current/musl -r /mnt \
      xbps \
      base-minimal \
      vim \
@@ -49,14 +48,12 @@ export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R http://mirrors.servercentra
      linux-firmware \
      linux-firmware-network \
      iputils \
-     dbus-elogind \
-     polkit \
+     dbus \
      elogind \
+     seatd
+     polkit \
      mesa-dri \
      gvfs \
-     waybar
-
-     walyand \
 
 for dir in sys dev proc; do $(mount --rbind /$dir /mnt/$dir && mount --make-rslave /mnt/$dir); done
 cp /etc/resolv.conf /mnt/etc
@@ -90,8 +87,8 @@ KEYMAP=us\n" > /etc/rc.conf
 
 echo "generating fstab file..."
 printf "
-/dev/nvme0n1p1/boot/efi   vfat    defaults,noatime,nodiratime        0   2
-/dev/nvme0n1p4/           ext4    defaults,noatime,nodiratime        0   1
+/dev/nvme0n1p1 /boot/efi   vfat    defaults,noatime,nodiratime        0   2
+/dev/nvme0n1p4 /           ext4    defaults,noatime,nodiratime        0   1
 tmpfs       /tmp        tmpfs   defaults,nosuid,nodev,nodiratime   0   0
 #tmpfs       /home/javier/.local/src/void-packages/masterdir/builddir    tmpfs   defaults,noatime,nodiratime,size=2G    0   0" > /etc/fstab
 
