@@ -1,64 +1,62 @@
 #!/bin/bash
 
-cfdisk -z /dev/sda
-mkfs.vfat /dev/sda1
-mkfs.ext4 /dev/sda3
-mkswap /dev/sda2
+mkfs.xfs /dev/nvme0n1p4
 
-mount /dev/sda3 /mnt
+mount /dev/nvme0n1p4 /mnt
 mkdir -p /mnt/boot/efi
-mount /dev/sda1 /mnt/boot/efi
-swapon /dev/sda2
+mount /dev/nvme0n1p1 /mnt/boot/efi
 
-export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R http://mirrors.servercentral.com/voidlinux/current/musl -r /mnt \
-    xbps \
-    base-minimal \
-    vim \
-    bash \
-    git \
-    curl \
-    ncurses \
-    less \
-    man-pages \
-    e2fsprogs \
-    procps-ng \
-    pciutils \
-    usbutils \
-    iproute2 \
-    util-linux \
-    kbd \
-    ethtool \
-    kmod \
-    traceroute \
-    opendoas \
-    bc \
-    bgs \
-    dejavu-fonts-ttf \
-    dhcpcd \
-    eudev \
-    ffmpeg \
-    file \
-    gcc \
-    mesa-vaapi \
-    zsh \
-    mpv \
-    fzf \
-    openssh \
-    setxkbmap \
-    unzip \
-    xclip \
-    xdotool \
-    xf86-video-intel \
-    xfsprogs \
-    xorg-minimal \
-    xrandr \
-    xtools \
-    xz \
-    zathura-pdf-poppler \
-    linux5.10 \
-    dracut \
-    linux-firmware-intel \
-    iputils
+export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R http://mirrors.servercentral.com/voidlinux/current -r /mnt \
+     xbps \
+     base-minimal \
+     vim \
+     bash \
+     git \
+     curl \
+     ncurses \
+     less \
+     man-pages \
+     e2fsprogs \
+     procps-ng \
+     pciutils \
+     usbutils \
+     iproute2 \
+     util-linux \
+     kbd \
+     ethtool \
+     kmod \
+     traceroute \
+     opendoas \
+     os-prober \
+     bc \
+     bgs \
+     dejavu-fonts-ttf \
+     dhcpcd \
+     eudev \
+     ffmpeg \
+     file \
+     gcc \
+     zsh \
+     mpv \
+     fzf \
+     openssh \
+     unzip \
+     xfsprogs \
+     xz \
+     zathura-pdf-poppler \
+     linux5.10 \
+     dracut \
+     linux-firmware \
+     linux-firmware-network \
+     iputils \
+     dbus-elogind \
+     polkit \
+     elogind \
+     mesa-dri \
+     gvfs \
+     waybar
+
+     walyand \
 
 for dir in sys dev proc; do $(mount --rbind /$dir /mnt/$dir && mount --make-rslave /mnt/$dir); done
 cp /etc/resolv.conf /mnt/etc
@@ -92,9 +90,8 @@ KEYMAP=us\n" > /etc/rc.conf
 
 echo "generating fstab file..."
 printf "
-/dev/sda1   /boot/efi   vfat    defaults,noatime,nodiratime        0   2
-/dev/sda3   /           ext4    defaults,noatime,nodiratime        0   1
-/dev/sda2   swap        swap    defaults                0   0
+/dev/nvme0n1p1/boot/efi   vfat    defaults,noatime,nodiratime        0   2
+/dev/nvme0n1p4/           ext4    defaults,noatime,nodiratime        0   1
 tmpfs       /tmp        tmpfs   defaults,nosuid,nodev,nodiratime   0   0
 #tmpfs       /home/javier/.local/src/void-packages/masterdir/builddir    tmpfs   defaults,noatime,nodiratime,size=2G    0   0" > /etc/fstab
 
