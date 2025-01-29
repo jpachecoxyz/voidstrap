@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Created By: Javier Pacheco - jpacheco@cock.li
+# Created On: 28/01/25
+# Project: Void linux bootstrap
 
 mkfs.ext4 /dev/nvme0n1p4
 mount /dev/nvme0n1p4 /mnt
@@ -6,60 +10,102 @@ mkdir -p /mnt/boot/efi
 mount /dev/nvme0n1p1 /mnt/boot/efi
 
 export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidlinux.org/current/musl -r /mnt \
-     xbps \
-     base-minimal \
-     vim \
-     bash \
-     git \
-     curl \
-     ncurses \
-     less \
-     man-pages \
-     e2fsprogs \
-     procps-ng \
-     pciutils \
-     usbutils \
-     iproute2 \
-     util-linux \
-     kbd \
-     ethtool \
-     kmod \
-     traceroute \
-     opendoas \
-     os-prober \
-     bc \
-     bgs \
-     dejavu-fonts-ttf \
-     dhcpcd \
-     eudev \
-     ffmpeg \
-     file \
-     gcc \
-     zsh \
-     mpv \
-     fzf \
-     openssh \
-     unzip \
-     xfsprogs \
-     xz \
-     zathura-pdf-poppler \
-     linux5.10 \
-     dracut \
-     linux-firmware \
-     linux-firmware-network \
-     iputils \
-     dbus \
-     elogind \
-     seatd
-     polkit \
-     mesa-dri \
-     gvfs \
+    xbps \
+    base-minimal \
+    NetworkManager \
+    Waybar \
+    bash \
+    bat \
+    bc \
+    bgs \
+    bluez \
+    brightnessctl \
+    curl \
+    dejavu-fonts-ttf \
+    dhcpcd \
+    direnv \
+    dracut \
+    e2fsprogs \
+    elogind \
+    emacs-pgtk \
+    enchant2-devel \
+    ethtool \
+    eudev \
+    eza \
+    fastfetch \
+    ffmpeg \
+    file \
+    firefox \
+    font-ibm-plex-otf \
+    foot \
+    fzf \
+    gcc \
+    git \
+    grim \
+    gvfs \
+    htop \
+    hugo \
+    hunspell \
+    hunspell-devel \
+    iproute2 \
+    iputils \
+    jq \
+    psmisc \
+    kbd \
+    kmod \
+    lazygit \
+    less \
+    libnotify \
+    libnotify-devel \
+    linux-firmware \
+    linux-firmware-network \
+    linux5.10 \
+    mako \
+    man-pages \
+    mesa-dri \
+    mpv \
+    ncurses \
+    neovim \
+    nodejs \
+    noto-fonts-emoji \
+    nsxiv \
+    opendoas \
+    openssh \
+    os-prober \
+    p7zip \
+    pciutils \
+    polkit \
+    procps-ng \
+    pulseaudio \
+    python3-pipx \
+    ripgrep \
+    seatd \
+    slurp \
+    stow \
+    swappy \
+    swww \
+    tectonic \
+    telegram-desktop \
+    tofi \
+    tomb \
+    traceroute \
+    unzip \
+    usbutils \
+    util-linux \
+    vim \
+    wf-recorder \
+    xfsprogs \
+    xrdb \
+    xz \
+    yazi \
+    yt-dlp \
+    zathura-pdf-poppler \
+    zsh
 
 for dir in sys dev proc; do $(mount --rbind /$dir /mnt/$dir && mount --make-rslave /mnt/$dir); done
 cp /etc/resolv.conf /mnt/etc
 cp /etc/xbps.d/* /mnt/etc/xbps.d/ || echo "file missing, dont worry..."
 cp postinstall.sh /mnt/root/
-cp custom.sh /mnt/root/
 
 xchroot /mnt /bin/bash <<EOF
 xbps-install -Sy grub-x86_64-efi
@@ -90,7 +136,6 @@ printf "
 /dev/nvme0n1p1 /boot/efi   vfat    defaults,noatime,nodiratime        0   2
 /dev/nvme0n1p4 /           ext4    defaults,noatime,nodiratime        0   1
 tmpfs       /tmp        tmpfs   defaults,nosuid,nodev,nodiratime   0   0
-#tmpfs       /home/javier/.local/src/void-packages/masterdir/builddir    tmpfs   defaults,noatime,nodiratime,size=2G    0   0" > /etc/fstab
 
 echo "Fstab file generated..."
 
