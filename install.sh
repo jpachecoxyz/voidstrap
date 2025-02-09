@@ -12,8 +12,6 @@ mount /dev/nvme0n1p1 /mnt/boot/efi
 export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidlinux.org/current/musl -r /mnt \
     xbps \
     base-minimal \
-    NetworkManager \
-    Waybar \
     bash \
     bat \
     bc \
@@ -37,6 +35,7 @@ export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidli
     file \
     firefox \
     font-ibm-plex-otf \
+    font-ioseva \
     foot \
     fzf \
     gcc \
@@ -47,7 +46,8 @@ export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidli
     hugo \
     hunspell \
     hunspell-devel \
-    iproute2 \
+    hunspell-en_US \
+    hunspell-es_ES \
     iputils \
     jq \
     psmisc \
@@ -93,7 +93,9 @@ export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidli
     usbutils \
     util-linux \
     vim \
+    Waybar \
     wf-recorder \
+    wpa_supplicant \
     xfsprogs \
     xrdb \
     xz \
@@ -135,7 +137,7 @@ echo "generating fstab file..."
 printf "
 /dev/nvme0n1p1 /boot/efi   vfat    defaults,noatime,nodiratime        0   2
 /dev/nvme0n1p4 /           ext4    defaults,noatime,nodiratime        0   1
-tmpfs       /tmp        tmpfs   defaults,nosuid,nodev,nodiratime   0   0
+tmpfs       /tmp        tmpfs   defaults,nosuid,nodev,nodiratime   0   0" > /etc/fstab
 
 echo "Fstab file generated..."
 
