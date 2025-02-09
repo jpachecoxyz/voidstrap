@@ -9,7 +9,6 @@ useradd -m -s /bin/zsh -U -G wheel,disk,lp,audio,video,optical,storage,scanner,n
 echo "Change user password..."
 passwd $user
 
-
 # Ethernet conection:
 cp -R /etc/sv/dhcpcd-eth0 /etc/sv/dhcpcd-$ETHCARD
 sed -i 's/eth0/$ETHCARD/' /etc/sv/dhcpcd-$ETHCARD/run
@@ -39,4 +38,5 @@ doas sed -i '/#psk=/d' /etc/wpa_supplicant/wpa_supplicant-wifi.conf
 INTERFACE="$(iwconfig  2>/dev/null | awk '/ESSID/ {print $1}')"
 # sudo wpa_supplicant -B -i $INTERFACE -c /etc/wpa_supplicant/wpa_supplicant-wifi.conf  -D wext &
 
-echo "message"
+# Grub OS_PROBER
+echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
