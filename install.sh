@@ -87,7 +87,6 @@ export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidli
     tectonic \
     telegram-desktop \
     tofi \
-    tomb \
     traceroute \
     unzip \
     usbutils \
