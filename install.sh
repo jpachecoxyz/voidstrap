@@ -41,13 +41,13 @@ export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidli
     gcc \
     git \
     grim \
-    gvfs \
     htop \
     hugo \
     hunspell \
     hunspell-devel \
     hunspell-en_US \
     hunspell-es_ES \
+    iproute2 \
     iputils \
     jq \
     psmisc \
@@ -74,7 +74,6 @@ export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidli
     os-prober \
     p7zip \
     pciutils \
-    polkit \
     procps-ng \
     pulseaudio \
     python3-pipx \
@@ -85,7 +84,6 @@ export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidli
     swappy \
     swww \
     tectonic \
-    telegram-desktop \
     tofi \
     traceroute \
     unzip \
@@ -93,6 +91,7 @@ export XBPS_ARCH=x86_64-musl && xbps-install -Suy -R https://repo-default.voidli
     util-linux \
     vim \
     Waybar \
+    wireless_tools \
     wf-recorder \
     wpa_supplicant \
     xfsprogs \
